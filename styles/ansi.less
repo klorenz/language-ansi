@@ -2,124 +2,242 @@
 //
 // See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
 // for a full listing of what's available.
-@import "ui-variables";
+//@import "ui-variables";
+
+// terminal.app osx colors
+@bright-black: rgb(129, 131, 131);
+@bright-red: rgb(252,57,31);
+@bright-green: rgb(49, 231, 34);
+@bright-yellow: rgb(234, 236, 35);
+@bright-blue: rgb(88, 51, 255);
+@bright-magenta: rgb(249, 53, 248);
+@bright-cyan: rgb(20, 240, 240);
+@bright-white: rgb(233, 235, 235);
+
+@normal-black: rgb(0, 0, 0);
+@normal-red: rgb(194, 54, 33);
+@normal-green: rgb(37, 188, 36);
+@normal-yellow: rgb(173, 173, 39);
+@normal-blue: rgb(73, 46, 225);
+@normal-magenta: rgb(211, 56, 211);
+@normal-cyan: rgb(51, 187, 200);
+@normal-white: rgb(203, 204, 205);
 
 // extend ansi colors
 atom-text-editor, atom-text-editor::shadow {
-  .ansi.intense {
-    // The ui-variables file is provided by base themes provided by Atom.
-    //
-    // See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
-    // for a full listing of what's available.
-    @import "ui-variables";
+  .terminal.ansi {
+    // swap background and foreground
+    .reverse {
+      .bold {
+        font-weight: bold;
 
-    // extend ansi colors
-
-    atom-text-editor, atom-text-editor::shadow {
-      .ansi.purple, .ansi.magenta {
-        color: magenta;
-      }
-      .ansi.black {
-        color: rgb(0, 0, 0);
-      }
-      .ansi.red {
-        color: rgb(170, 0, 0);
-      }
-      .ansi.green {
-        color: rgb(0, 170, 0);
-      }
-      .ansi.brown, .ansi.yellow {
-        color: rgb(170, 85, 0);
-      }
-      .ansi.blue {
-        color: rgb(0, 0, 170);
-      }
-      .ansi.cyan {
-        color: rgb(0, 170, 170);
-      }
-      .ansi.gray {
-        color: rgb(170, 170, 170);
-      }
-
-      .ansi.bg-purple, .ansi.bg-magenta {
-        background-color: magenta;
-      }
-      .ansi.bg-black {
-        background-color: rgb(0, 0, 0);
-      }
-      .ansi.bg-red {
-        background-color: rgb(170, 0, 0);
-      }
-      .ansi.bg-green {
-        background-color: rgb(0, 170, 0);
-      }
-      .ansi.bg-brown, .ansi.bg-yellow {
-        background-color: rgb(170, 85, 0);
-      }
-      .ansi.bg-blue {
-        background-color: rgb(0, 0, 170);
-      }
-      .ansi.bg-cyan {
-        background-color: rgb(0, 170, 170);
-      }
-      .ansi.bg-gray {
-        background-color: rgb(170, 170, 170);
+        // highlighted colors
+        .black {
+          background-color: @bright-black;
+        }
+        .red {
+          background-color: @bright-red;
+        }
+        .green {
+          background-color: @bright-green;
+        }
+        .yellow {
+          background-color: @bright-yellow;
+        }
+        .blue {
+          background-color: @bright-blue;
+        }
+        .magenta {
+          background-color: @bright-magenta;
+        }
+        .cyan {
+          background-color: @bright-cyan;
+        }
+        .white {
+          background-color: @bright-white;
+        }
+        .bg-black {
+          color: @bright-black;
+        }
+        .bg-red {
+          color: @bright-red;
+        }
+        .bg-green {
+          color: @bright-green;
+        }
+        .bg-yellow {
+          color: @bright-yellow;
+        }
+        .bg-blue {
+          color: @bright-blue;
+        }
+        .bg-magenta {
+          color: @bright-magenta;
+        }
+        .bg-cyan {
+          color: @bright-cyan;
+        }
+        .bg-white {
+          color: @bright-white;
+        }
       }
 
-      .ansi.italic {
-        font-style: italic;
+      .black {
+        background-color: @normal-black;
       }
-      .ansi.underline {
-        text-decoration: underline;
+      .red {
+        background-color: @normal-red;
+      }
+      .green {
+        background-color: @normal-green;
+      }
+      .yellow {
+        background-color: @normal-yellow;
+      }
+      .blue {
+        background-color: @normal-blue;
+      }
+      .magenta {
+        background-color: @normal-magenta;
+      }
+      .cyan {
+        background-color: @normal-cyan;
+      }
+      .white {
+        background-color: @normal-white;
+      }
+      .bg-black {
+        color: @normal-white;
+      }
+      .bg-red {
+        color: @normal-red;
+      }
+      .bg-green {
+        color: @normal-green;
+      }
+      .bg-yellow {
+        color: @normal-yellow;
+      }
+      .bg-blue {
+        color: @normal-blue;
+      }
+      .bg-magenta {
+        color: @normal-magenta;
+      }
+      .bg-cyan {
+        color: @normal-cyan;
+      }
+      .bg-white {
+        color: @normal-white;
       }
     }
-  }
-  .ansi.black {
-    color: rgb(0, 0, 0);
-  }
-  .ansi.red {
-    color: rgb(170, 0, 0);
-  }
-  .ansi.green {
-    color: rgb(0, 170, 0);
-  }
-  .ansi.brown, .ansi.yellow {
-    color: rgb(170, 85, 0);
-  }
-  .ansi.blue {
-    color: rgb(0, 0, 170);
-  }
-  .ansi.cyan {
-    color: rgb(0, 170, 170);
-  }
-  .ansi.gray {
-    color: rgb(170, 170, 170);
-  }
-  .ansi.bg-black {
-    background-color: rgb(0, 0, 0);
-  }
-  .ansi.bg-red {
-    background-color: rgb(170, 0, 0);
-  }
-  .ansi.bg-green {
-    background-color: rgb(0, 170, 0);
-  }
-  .ansi.bg-brown, .ansi.bg-yellow {
-    background-color: rgb(170, 85, 0);
-  }
-  .ansi.bg-blue {
-    background-color: rgb(0, 0, 170);
-  }
-  .ansi.bg-cyan {
-    background-color: rgb(0, 170, 170);
-  }
-  .ansi.bg-gray {
-    background-color: rgb(170, 170, 170);
-  }
-  .ansi.italic {
-    font-style: italic;
-  }
-  .ansi.underline {
-    text-decoration: underline;
+    .italic {
+      font-style: italic;
+    }
+    .underline {
+      text-decoration: underline;
+    }
+    .bold {
+      font-weight: bold;
+
+      // highlighted colors
+      .black {
+        color: @bright-black;
+      }
+      .red {
+        color: @bright-red;
+      }
+      .green {
+        color: @bright-green;
+      }
+      .yellow {
+        color: @bright-yellow;
+      }
+      .blue {
+        color: @bright-blue;
+      }
+      .magenta {
+        color: @bright-magenta;
+      }
+      .cyan {
+        color: @bright-cyan;
+      }
+      .white {
+        color: @bright-white;
+      }
+      .bg-black {
+        background-color: @bright-black;
+      }
+      .bg-red {
+        background-color: @bright-red;
+      }
+      .bg-green {
+        background-color: @bright-green;
+      }
+      .bg-yellow {
+        background-color: @bright-yellow;
+      }
+      .bg-blue {
+        background-color: @bright-blue;
+      }
+      .bg-magenta {
+        background-color: @bright-magenta;
+      }
+      .bg-cyan {
+        background-color: @bright-cyan;
+      }
+      .bg-white {
+        background-color: @bright-white;
+      }
+    }
+
+    .black {
+      color: @normal-black;
+    }
+    .red {
+      color: @normal-red;
+    }
+    .green {
+      color: @normal-green;
+    }
+    .yellow {
+      color: @normal-yellow;
+    }
+    .blue {
+      color: @normal-blue;
+    }
+    .magenta {
+      color: @normal-magenta;
+    }
+    .cyan {
+      color: @normal-cyan;
+    }
+    .white {
+      color: @normal-white;
+    }
+    .bg-black {
+      background-color: @normal-white;
+    }
+    .bg-red {
+      background-color: @normal-red;
+    }
+    .bg-green {
+      background-color: @normal-green;
+    }
+    .bg-yellow {
+      background-color: @normal-yellow;
+    }
+    .bg-blue {
+      background-color: @normal-blue;
+    }
+    .bg-magenta {
+      background-color: @normal-magenta;
+    }
+    .bg-cyan {
+      background-color: @normal-cyan;
+    }
+    .bg-white {
+      background-color: @normal-white;
+    }
   }
 }

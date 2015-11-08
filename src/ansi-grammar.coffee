@@ -1,5 +1,4 @@
-makeGrammar = require 'atom-syntax-tools'
-
+# {rule} = require 'atom-syntax-tools'
 
 # see http://en.wikipedia.org/wiki/ANSI_escape_code
 # http://www.hamiltonlabs.com/userguide/30-AnsiEscapeSequences.htm
@@ -63,6 +62,7 @@ ansiFormats =
   italic:      {start: 3, end: [ 0, 23 ]}
   underline:   {start: 4, end: [ 0, 24 ]}
 #  blink:       {start: 5, end: [ 0, 24 ]}  # which often is bright bg
+  reversed:    {start: 7, end: [ 0, 27 ]}
   "bg-black":  ansiColor(40)
   "bg-red":    ansiColor(41)
   "bg-green":  ansiColor(42)
@@ -102,26 +102,24 @@ ansiFormatted = (format) ->
   return [
     {
       b: "(?<=\\x1B\\[|\\d;)(#{start})(;)"
-      # b: "\\G(#{start};)"
+      # b: "\\G(#{start};)" does not work :(
       c:
         1: "hidden.escape-code.pmc.#{name}"  # pmc = private mode characters
         2: "hidden.escape-code.separator"  #
       N: "markup.#{markup}"
       e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
-#      L: true
-      p: [ "#ansiFormat" ]
+      p: "#ansiFormat"
     }
     {
       b: "(?<=\\x1B\\[|\\d;)(#{start})(m)"
-      # b: "\\G(#{start}m)"
+      # b: "\\G(#{start}m)" does not work :(
       c:
         1: "hidden.escape-code.pmc.#{name}"
         2: "hidden.escape-code.letter.m"
 
       N: "markup.#{markup}"
       e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
-#      L: true
-      p: [ "#ansiFormatted" ]
+      p: "#ansiFormatted"
     }
   ]
 
@@ -161,6 +159,5 @@ grammar =
           formats.push rule
 
       formats
-
 
 module.exports = grammar

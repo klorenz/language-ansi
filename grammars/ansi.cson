@@ -432,6 +432,36 @@
         ]
       }
       {
+        'begin': '(?<=\\x1B\\[|\\d;)(7)(;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.escape-code.pmc.reversed.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.reversed.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|27);)\\d{1,2};)*(?:0|27)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(7)(m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.escape-code.pmc.reversed.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.reversed.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|27);)\\d{1,2};)*(?:0|27)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
         'begin': '(?<=\\x1B\\[|\\d;)(40)(;)'
         'beginCaptures':
           '1':
