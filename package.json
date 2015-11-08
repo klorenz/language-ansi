@@ -1,0 +1,24 @@
+{
+  "name": "language-ansi",
+  "version": "0.0.0",
+  "description": "ANSI Terminal Color support in Atom",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "homepage": "http://github.io/klorenz/language-ansi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klorenz/language-ansi.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klorenz/language-ansi/issues"
+  },
+  "devDependencies": {
+    "coffeelint": "^1.10.1",
+    "atom-syntax-tools": "^0.9.1"
+  },
+  "dependencies": {
+  }
+}

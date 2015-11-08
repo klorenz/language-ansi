@@ -1,0 +1,600 @@
+'name': 'ANSI Formatted'
+'scopeName': 'text.ansi'
+'patterns': [
+  {
+    'include': '#ansiFormatted'
+  }
+]
+'repository':
+  'ansiFormatted':
+    'patterns': [
+      {
+        'begin': '(\\x1B\\[)(?=\\d{1,2}(;\\d{1,2})*m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'name': 'meta.ansi-formatted.ansi'
+        'applyEndPatternLast': true
+        'end': '(?=\\x1B\\[\\d{1,2}(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+    ]
+  'ansiFormat':
+    'patterns': [
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(0;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.reset.ansi'
+        'end': '(?=\\x1B\\[((?!\\d+;)\\d{1,2};)*\\d+(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(0m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.reset.ansi'
+        'end': '(?=\\x1B\\[((?!\\d+;)\\d{1,2};)*\\d+(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(30;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.black.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(30m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.black.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(31;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.red.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(31m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.red.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(32;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.green.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(32m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.green.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(33;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.yellow.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(33m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.yellow.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(34;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.blue.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(34m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.blue.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(35;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.purple.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(35m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.purple.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(36;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.cyan.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(36m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.cyan.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(37;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.white.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(37m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.white.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(39;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.normal-color.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(39m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.normal-color.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(1;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.intensive.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|2|21|22);)\\d{1,2};)*(?:0|2|21|22)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(1m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.intensive.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|2|21|22);)\\d{1,2};)*(?:0|2|21|22)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(3;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.italic.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|23);)\\d{1,2};)*(?:0|23)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(3m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.italic.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|23);)\\d{1,2};)*(?:0|23)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(4;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.underline.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|24);)\\d{1,2};)*(?:0|24)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(4m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.underline.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|24);)\\d{1,2};)*(?:0|24)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(40;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-black.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(40m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-black.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(41;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-red.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(41m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-red.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(42;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-green.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(42m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-green.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(43;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-yellow.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(43m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-yellow.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(44;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-blue.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(44m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-blue.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(45;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-purple.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(45m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-purple.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(46;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-cyan.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(46m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-cyan.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(47;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-white.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(47m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-white.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(49;)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-normal-color.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\x1B\\[|\\d;)(49m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.ansi-escape-code.ansi'
+        'contentName': 'terminal.ansi.bg-normal-color.ansi'
+        'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormatted'
+          }
+        ]
+      }
+    ]
