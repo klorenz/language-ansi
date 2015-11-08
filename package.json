@@ -1,6 +1,6 @@
 {
   "name": "language-ansi",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ANSI Terminal Markup support in Atom",
   "engines": {
     "atom": "*",
@@ -19,6 +19,5 @@
     "coffeelint": "^1.10.1",
     "atom-syntax-tools": "^0.9.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
