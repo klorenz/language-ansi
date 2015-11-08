@@ -129,6 +129,11 @@ grammar =
   patterns: [
     "#terminalMarkup"
   ]
+  fileTypes: [
+    'ansi'
+  ]
+  # injections:
+  #   "text.*": /^(?=.*\x1b\[\d/
 
   repository:
     terminalMarkup:

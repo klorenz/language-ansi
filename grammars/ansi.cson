@@ -1,3 +1,6 @@
+'fileTypes': [
+  'ansi'
+]
 'name': 'ANSI Terminal Markup'
 'scopeName': 'text.ansi'
 'patterns': [
