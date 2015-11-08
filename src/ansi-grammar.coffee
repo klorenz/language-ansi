@@ -53,11 +53,12 @@ ansiFormats =
   green:       ansiColor(32)
   yellow:      ansiColor(33)
   blue:        ansiColor(34)
-  purple:      ansiColor(35)
+  magenta:     ansiColor(35)
   cyan:        ansiColor(36)
   white:       ansiColor(37)
-  "normal-color": ansiColor(39)
-  intensive:   {start: 1, end: [ 0, 2, 21, 22 ]}
+  "normal": ansiColor(39)
+
+  bold:   {start: 1, end: [ 0, 2, 21, 22 ]}
   # dim:         {start: 2, end: [ 0, 23 ]}
   italic:      {start: 3, end: [ 0, 23 ]}
   underline:   {start: 4, end: [ 0, 24 ]}
@@ -70,7 +71,7 @@ ansiFormats =
   "bg-purple": ansiColor(45)
   "bg-cyan":   ansiColor(46)
   "bg-white":  ansiColor(47)
-  "bg-normal-color": ansiColor(49)
+  "bg-normal": ansiColor(49)
 
 #  italic: 2
 #  "underline-single": 4
@@ -82,6 +83,10 @@ ansiFormatted = (format) ->
     format = ansiFormats[format]
 
   name = format.name if format.name
+  markup = name
+
+  if name not in ['bold', 'underline', 'italic', 'reset']
+    markup = "color.#{name}"
 
   {start, end, extra} = format
 
@@ -96,19 +101,24 @@ ansiFormatted = (format) ->
 
   return [
     {
-      b: "(?<=\\x1B\\[|\\d;)(#{start};)"
+      b: "(?<=\\x1B\\[|\\d;)(#{start})(;)"
       # b: "\\G(#{start};)"
-      c: { 1: "hidden.ansi-escape-code" }
-      N: "terminal.ansi.#{name}#{extra}"
+      c:
+        1: "hidden.escape-code.pmc.#{name}"  # pmc = private mode characters
+        2: "hidden.escape-code.separator"  #
+      N: "markup.#{markup}"
       e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
 #      L: true
       p: [ "#ansiFormat" ]
     }
     {
-      b: "(?<=\\x1B\\[|\\d;)(#{start}m)"
+      b: "(?<=\\x1B\\[|\\d;)(#{start})(m)"
       # b: "\\G(#{start}m)"
-      c: { 1: "hidden.ansi-escape-code" }
-      N: "terminal.ansi.#{name}#{extra}"
+      c:
+        1: "hidden.escape-code.pmc.#{name}"
+        2: "hidden.escape-code.letter.m"
+
+      N: "markup.#{markup}"
       e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
 #      L: true
       p: [ "#ansiFormatted" ]
@@ -116,18 +126,27 @@ ansiFormatted = (format) ->
   ]
 
 grammar =
-  name: "ANSI Formatted"
+  name: "ANSI Terminal Markup"
   scopeName: "text.ansi"
   patterns: [
-    "#ansiFormatted"
+    "#terminalMarkup"
   ]
 
   repository:
+    terminalMarkup:
+      b: /(\x1B\[)(?=\d{1,2}(;\d{1,2})*m)/
+      c: { 1: "hidden.escape-code.csi" }   # control sequence indicator
+
+      n: "meta.markup.terminal"
+
+      L: true
+      e: /(?=\x1B\[\d{1,2}(;\d{1,2})*m)/
+
+      p: "#ansiFormat"
+
     ansiFormatted:
       b: /(\x1B\[)(?=\d{1,2}(;\d{1,2})*m)/
-      c: { 1: "hidden.ansi-escape-code" }
-
-      n: "meta.ansi-formatted"
+      c: { 1: "hidden.escape-code.csi" }   # control sequence indicator
 
       L: true
       e: /(?=\x1B\[\d{1,2}(;\d{1,2})*m)/

@@ -26,9 +26,10 @@ tokenizeLines = (grammar, args...) ->
   return lines
 
 
-checkFormat = (grammar, format) ->
-  lines = tokenizeLines grammar, '\x1b[1mtext\x1b[0m'
-  expect(lines[0][2]).toEqual value: 'text',     scopes: ['text.ansi', 'meta.ansi-formatted.ansi', "terminal.ansi.#{format}.ansi" ]
+checkFormat = (grammar, code, format) ->
+  lines = tokenizeLines grammar,"\x1b[#{code}mtext\x1b[0m"
+  logString lines[0][3].value
+  expect(lines[0][3]).toEqual value: 'text',     scopes: ['text.ansi', 'meta.markup.terminal.ansi', "markup.#{format}.ansi" ]
 
 describe "ANSI Formatted grammar", ->
   grammar = null
@@ -51,24 +52,43 @@ describe "ANSI Formatted grammar", ->
   it "tokenizes simple colors", ->
     lines = tokenizeLines grammar, '\x1b[32m✓\x1b[39m'
 
-    expect(lines[0][0]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][1]).toEqual value: '32m',   scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][2]).toEqual value: '✓',     scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'terminal.ansi.green.ansi' ]
-    expect(lines[0][3]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][4]).toEqual value: '39m',   scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
+    expect(lines[0][0]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.csi.ansi' ]
+    expect(lines[0][1]).toEqual value: '32',    scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.pmc.green.ansi' ]
+    expect(lines[0][2]).toEqual value: 'm',     scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.letter.m.ansi' ]
+    expect(lines[0][3]).toEqual value: '✓',     scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'markup.color.green.ansi' ]
+    expect(lines[0][4]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.csi.ansi' ]
+    expect(lines[0][5]).toEqual value: '39',    scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.pmc.normal.ansi' ]
+    expect(lines[0][6]).toEqual value: 'm',     scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.letter.m.ansi' ]
 
-  it "tokenizes intensive formatting", ->
-    checkFormat "intensive", grammar
+  it "tokenizes bold formatting", ->
+    checkFormat grammar, 1, "bold"
 
-  fit "tokenizes nested escape codes with only one reset code", ->
+  it "tokenizes italic formatting", ->
+    checkFormat grammar, 3, "italic"
+
+  it "tokenizes underline formatting", ->
+    checkFormat grammar, 4, "underline"
+
+
+  it "tokenizes red formatting", ->
+    checkFormat grammar, 31, "color.red"
+
+  it "tokenizes green formatting", ->
+    checkFormat grammar, 32, "color.green"
+
+
+  it "tokenizes nested escape codes with only one reset code", ->
     line = '\x1b[1m\x1b[31mSome Error\x1b[0m'
 
     lines = tokenizeLines grammar, line
 
-    expect(lines[0][0]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][1]).toEqual value: '1m',   scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][2]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'terminal.ansi.intensive.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][3]).toEqual value: '31m',   scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'terminal.ansi.intensive.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][4]).toEqual value: 'Some Error', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'terminal.ansi.intensive.ansi', 'terminal.ansi.red.ansi' ]
-    expect(lines[0][5]).toEqual value: '\x1b[', scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
-    expect(lines[0][6]).toEqual value: '0m',   scopes: ['text.ansi', 'meta.ansi-formatted.ansi', 'hidden.ansi-escape-code.ansi' ]
+    expect(lines[0][0]).toEqual value: '\x1b[',      scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.csi.ansi' ]
+    expect(lines[0][1]).toEqual value: '1',          scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.pmc.bold.ansi' ]
+    expect(lines[0][2]).toEqual value: 'm',          scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.letter.m.ansi' ]
+    expect(lines[0][3]).toEqual value: '\x1b[',      scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'markup.bold.ansi', 'hidden.escape-code.csi.ansi' ]
+    expect(lines[0][4]).toEqual value: '31',         scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'markup.bold.ansi', 'hidden.escape-code.pmc.red.ansi' ]
+    expect(lines[0][5]).toEqual value: 'm',          scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'markup.bold.ansi', 'hidden.escape-code.letter.m.ansi' ]
+    expect(lines[0][6]).toEqual value: 'Some Error', scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'markup.bold.ansi', 'markup.color.red.ansi' ]
+    expect(lines[0][7]).toEqual value: '\x1b[',      scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.csi.ansi' ]
+    expect(lines[0][8]).toEqual value: '0',          scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.pmc.reset.ansi' ]
+    expect(lines[0][9]).toEqual value: 'm',          scopes: ['text.ansi', 'meta.markup.terminal.ansi', 'hidden.escape-code.letter.m.ansi' ]

@@ -1,19 +1,35 @@
-'name': 'ANSI Formatted'
+'name': 'ANSI Terminal Markup'
 'scopeName': 'text.ansi'
 'patterns': [
   {
-    'include': '#ansiFormatted'
+    'include': '#terminalMarkup'
   }
 ]
 'repository':
+  'terminalMarkup':
+    'patterns': [
+      {
+        'begin': '(\\x1B\\[)(?=\\d{1,2}(;\\d{1,2})*m)'
+        'beginCaptures':
+          '1':
+            'name': 'hidden.escape-code.csi.ansi'
+        'name': 'meta.markup.terminal.ansi'
+        'applyEndPatternLast': true
+        'end': '(?=\\x1B\\[\\d{1,2}(;\\d{1,2})*m)'
+        'patterns': [
+          {
+            'include': '#ansiFormat'
+          }
+        ]
+      }
+    ]
   'ansiFormatted':
     'patterns': [
       {
         'begin': '(\\x1B\\[)(?=\\d{1,2}(;\\d{1,2})*m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'name': 'meta.ansi-formatted.ansi'
+            'name': 'hidden.escape-code.csi.ansi'
         'applyEndPatternLast': true
         'end': '(?=\\x1B\\[\\d{1,2}(;\\d{1,2})*m)'
         'patterns': [
@@ -26,11 +42,13 @@
   'ansiFormat':
     'patterns': [
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(0;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(0)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.reset.ansi'
+            'name': 'hidden.escape-code.pmc.reset.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.reset.ansi'
         'end': '(?=\\x1B\\[((?!\\d+;)\\d{1,2};)*\\d+(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -39,11 +57,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(0m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(0)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.reset.ansi'
+            'name': 'hidden.escape-code.pmc.reset.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.reset.ansi'
         'end': '(?=\\x1B\\[((?!\\d+;)\\d{1,2};)*\\d+(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -52,11 +72,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(30;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(30)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.black.ansi'
+            'name': 'hidden.escape-code.pmc.black.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.black.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -65,11 +87,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(30m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(30)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.black.ansi'
+            'name': 'hidden.escape-code.pmc.black.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.black.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -78,11 +102,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(31;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(31)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.red.ansi'
+            'name': 'hidden.escape-code.pmc.red.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.red.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -91,11 +117,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(31m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(31)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.red.ansi'
+            'name': 'hidden.escape-code.pmc.red.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.red.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -104,11 +132,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(32;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(32)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.green.ansi'
+            'name': 'hidden.escape-code.pmc.green.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.green.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -117,11 +147,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(32m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(32)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.green.ansi'
+            'name': 'hidden.escape-code.pmc.green.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.green.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -130,11 +162,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(33;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(33)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.yellow.ansi'
+            'name': 'hidden.escape-code.pmc.yellow.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.yellow.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -143,11 +177,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(33m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(33)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.yellow.ansi'
+            'name': 'hidden.escape-code.pmc.yellow.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.yellow.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -156,11 +192,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(34;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(34)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.blue.ansi'
+            'name': 'hidden.escape-code.pmc.blue.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.blue.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -169,11 +207,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(34m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(34)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.blue.ansi'
+            'name': 'hidden.escape-code.pmc.blue.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.blue.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -182,11 +222,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(35;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(35)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.purple.ansi'
+            'name': 'hidden.escape-code.pmc.magenta.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.magenta.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -195,11 +237,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(35m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(35)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.purple.ansi'
+            'name': 'hidden.escape-code.pmc.magenta.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.magenta.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -208,11 +252,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(36;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(36)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.cyan.ansi'
+            'name': 'hidden.escape-code.pmc.cyan.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.cyan.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -221,11 +267,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(36m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(36)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.cyan.ansi'
+            'name': 'hidden.escape-code.pmc.cyan.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.cyan.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -234,11 +282,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(37;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(37)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.white.ansi'
+            'name': 'hidden.escape-code.pmc.white.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.white.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -247,11 +297,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(37m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(37)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.white.ansi'
+            'name': 'hidden.escape-code.pmc.white.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.white.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -260,11 +312,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(39;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(39)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.normal-color.ansi'
+            'name': 'hidden.escape-code.pmc.normal.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.normal.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -273,11 +327,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(39m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(39)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.normal-color.ansi'
+            'name': 'hidden.escape-code.pmc.normal.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.normal.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|31|32|33|34|35|36|37|38|39);)\\d{1,2};)*(?:0|31|32|33|34|35|36|37|38|39)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -286,11 +342,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(1;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(1)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.intensive.ansi'
+            'name': 'hidden.escape-code.pmc.bold.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.bold.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|2|21|22);)\\d{1,2};)*(?:0|2|21|22)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -299,11 +357,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(1m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(1)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.intensive.ansi'
+            'name': 'hidden.escape-code.pmc.bold.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.bold.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|2|21|22);)\\d{1,2};)*(?:0|2|21|22)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -312,11 +372,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(3;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(3)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.italic.ansi'
+            'name': 'hidden.escape-code.pmc.italic.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.italic.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|23);)\\d{1,2};)*(?:0|23)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -325,11 +387,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(3m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(3)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.italic.ansi'
+            'name': 'hidden.escape-code.pmc.italic.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.italic.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|23);)\\d{1,2};)*(?:0|23)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -338,11 +402,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(4;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(4)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.underline.ansi'
+            'name': 'hidden.escape-code.pmc.underline.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.underline.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|24);)\\d{1,2};)*(?:0|24)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -351,11 +417,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(4m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(4)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.underline.ansi'
+            'name': 'hidden.escape-code.pmc.underline.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.underline.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|24);)\\d{1,2};)*(?:0|24)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -364,11 +432,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(40;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(40)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-black.ansi'
+            'name': 'hidden.escape-code.pmc.bg-black.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-black.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -377,11 +447,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(40m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(40)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-black.ansi'
+            'name': 'hidden.escape-code.pmc.bg-black.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-black.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -390,11 +462,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(41;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(41)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-red.ansi'
+            'name': 'hidden.escape-code.pmc.bg-red.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-red.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -403,11 +477,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(41m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(41)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-red.ansi'
+            'name': 'hidden.escape-code.pmc.bg-red.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-red.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -416,11 +492,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(42;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(42)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-green.ansi'
+            'name': 'hidden.escape-code.pmc.bg-green.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-green.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -429,11 +507,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(42m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(42)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-green.ansi'
+            'name': 'hidden.escape-code.pmc.bg-green.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-green.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -442,11 +522,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(43;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(43)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-yellow.ansi'
+            'name': 'hidden.escape-code.pmc.bg-yellow.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-yellow.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -455,11 +537,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(43m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(43)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-yellow.ansi'
+            'name': 'hidden.escape-code.pmc.bg-yellow.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-yellow.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -468,11 +552,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(44;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(44)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-blue.ansi'
+            'name': 'hidden.escape-code.pmc.bg-blue.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-blue.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -481,11 +567,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(44m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(44)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-blue.ansi'
+            'name': 'hidden.escape-code.pmc.bg-blue.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-blue.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -494,11 +582,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(45;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(45)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-purple.ansi'
+            'name': 'hidden.escape-code.pmc.bg-purple.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-purple.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -507,11 +597,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(45m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(45)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-purple.ansi'
+            'name': 'hidden.escape-code.pmc.bg-purple.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-purple.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -520,11 +612,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(46;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(46)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-cyan.ansi'
+            'name': 'hidden.escape-code.pmc.bg-cyan.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-cyan.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -533,11 +627,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(46m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(46)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-cyan.ansi'
+            'name': 'hidden.escape-code.pmc.bg-cyan.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-cyan.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -546,11 +642,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(47;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(47)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-white.ansi'
+            'name': 'hidden.escape-code.pmc.bg-white.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-white.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -559,11 +657,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(47m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(47)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-white.ansi'
+            'name': 'hidden.escape-code.pmc.bg-white.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-white.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -572,11 +672,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(49;)'
+        'begin': '(?<=\\x1B\\[|\\d;)(49)(;)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-normal-color.ansi'
+            'name': 'hidden.escape-code.pmc.bg-normal.ansi'
+          '2':
+            'name': 'hidden.escape-code.separator.ansi'
+        'contentName': 'markup.color.bg-normal.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
@@ -585,11 +687,13 @@
         ]
       }
       {
-        'begin': '(?<=\\x1B\\[|\\d;)(49m)'
+        'begin': '(?<=\\x1B\\[|\\d;)(49)(m)'
         'beginCaptures':
           '1':
-            'name': 'hidden.ansi-escape-code.ansi'
-        'contentName': 'terminal.ansi.bg-normal-color.ansi'
+            'name': 'hidden.escape-code.pmc.bg-normal.ansi'
+          '2':
+            'name': 'hidden.escape-code.letter.m.ansi'
+        'contentName': 'markup.color.bg-normal.ansi'
         'end': '(?=\\x1B\\[((?!(?:0|41|42|43|44|45|46|47|48|49);)\\d{1,2};)*(?:0|41|42|43|44|45|46|47|48|49)(;\\d{1,2})*m)'
         'patterns': [
           {
