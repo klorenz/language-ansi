@@ -3,11 +3,11 @@ grammar = require './ansi-grammar.coffee'
 path = require 'path'
 
 createAnsiGrammar = ->
-    grammarFile = path.resolve __dirname, "..", "grammars", "ansi.cson"
-    makeGrammar grammar, grammarFile
+  grammarFile = path.resolve __dirname, "..", "grammars", "ansi.cson"
+  makeGrammar grammar, grammarFile
 
 if require.main is module
   createAnsiGrammar()
-  process.stdout.write "Grammar created."
+  process.stdout.write "Grammar created.\n"
 
 module.exports = {createAnsiGrammar}
