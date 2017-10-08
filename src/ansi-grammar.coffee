@@ -5,7 +5,8 @@
 
 # http://graphcomp.com/info/specs/ansi_col.html
 
-# Sets multiple display attribute settings. The following lists standard attributes:
+# Sets multiple display attribute settings. The following lists standard
+# attributes:
 #
 # 0	Reset all attributes
 # 1	Bright
@@ -35,18 +36,18 @@
 # 46	Cyan
 
 ansiColor = (num) ->
-    if num >= 40
-      stop =  [ 0, 41, 42, 43, 44, 45, 46, 47, 48, 49 ]
-    else
-      stop =  [ 0, 31, 32, 33, 34, 35, 36, 37, 38, 39 ]
+  if num >= 40
+    stop =  [ 0, 41, 42, 43, 44, 45, 46, 47, 48, 49 ]
+  else
+    stop =  [ 0, 31, 32, 33, 34, 35, 36, 37, 38, 39 ]
 
-    {
-      start: num
-      end: stop
-    }
+  {
+    start: num
+    end: stop
+  }
 
 ansiFormats =
-  reset:       { start: 0}
+  reset:       { start: '0?'}
   black:       ansiColor(30)
   red:         ansiColor(31)
   green:       ansiColor(32)
@@ -55,14 +56,14 @@ ansiFormats =
   magenta:     ansiColor(35)
   cyan:        ansiColor(36)
   white:       ansiColor(37)
-  "normal": ansiColor(39)
+  "normal":    ansiColor(39)
 
   bold:   {start: 1, end: [ 0, 2, 21, 22 ]}
   # dim:         {start: 2, end: [ 0, 23 ]}
   italic:      {start: 3, end: [ 0, 23 ]}
   underline:   {start: 4, end: [ 0, 24 ]}
-#  blink:       {start: 5, end: [ 0, 24 ]}  # which often is bright bg
-  reversed:    {start: 7, end: [ 0, 27 ]}
+  # blink:       {start: 5, end: [ 0, 24 ]}  # which often is bright bg
+  reverse:    {start: 7, end: [ 0, 27 ]}
   "bg-black":  ansiColor(40)
   "bg-red":    ansiColor(41)
   "bg-green":  ansiColor(42)
@@ -92,7 +93,7 @@ ansiFormatted = (format) ->
 
   end = "\\d+" unless end
   if end instanceof Array
-     end = "(?:"+end.join("|")+")"
+    end = "(?:"+end.join("|")+")"
 
   if start instanceof Array
     start = "(?:"+start.join("|")+")"
@@ -107,7 +108,7 @@ ansiFormatted = (format) ->
         1: "hidden.escape-code.pmc.#{name}"  # pmc = private mode characters
         2: "hidden.escape-code.separator"  #
       N: "markup.#{markup}"
-      e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
+      e: "(?=\\x1B\\[(?:((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*)?m)"
       p: "#ansiFormat"
     }
     {
@@ -118,7 +119,7 @@ ansiFormatted = (format) ->
         2: "hidden.escape-code.letter.m"
 
       N: "markup.#{markup}"
-      e: "(?=\\x1B\\[((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*m)"
+      e: "(?=\\x1B\\[(?:((?!#{end};)\\d{1,2};)*#{end}(;\\d{1,2})*)?m)"
       p: "#ansiFormatted"
     }
   ]
@@ -137,22 +138,22 @@ grammar =
 
   repository:
     terminalMarkup:
-      b: /(\x1B\[)(?=\d{1,2}(;\d{1,2})*m)/
+      b: /(\x1B\[)(?=(?:\d{1,2}(;\d{1,2})*)?m)/
       c: { 1: "hidden.escape-code.csi" }   # control sequence indicator
 
       n: "meta.markup.terminal"
 
       L: true
-      e: /(?=\x1B\[\d{1,2}(;\d{1,2})*m)/
+      e: /(?=\x1B\[(?:\d{1,2}(;\d{1,2})*)?m)/
 
       p: "#ansiFormat"
 
     ansiFormatted:
-      b: /(\x1B\[)(?=\d{1,2}(;\d{1,2})*m)/
+      b: /(\x1B\[)(?=(?:\d{1,2}(;\d{1,2})*)?m)/
       c: { 1: "hidden.escape-code.csi" }   # control sequence indicator
 
       L: true
-      e: /(?=\x1B\[\d{1,2}(;\d{1,2})*m)/
+      e: /(?=\x1B\[(?:\d{1,2}?(;\d{1,2})*)?m)/
 
       p: "#ansiFormat"
 
